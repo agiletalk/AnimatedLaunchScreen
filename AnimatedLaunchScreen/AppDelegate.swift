@@ -16,6 +16,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        let duration = 2.0
+        
+        let launchScreen = UIStoryboard(name: "LaunchScreen", bundle: nil)
+        let launchViewController = launchScreen.instantiateInitialViewController()
+        let imageView = launchViewController?.view.viewWithTag(100) as! UIImageView
+        imageView.image = UIImage.animatedImageNamed("win_", duration: duration)
+        self.window?.rootViewController = launchViewController
+        
+        let delay = duration * Double(NSEC_PER_SEC)
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        dispatch_after(time, dispatch_get_main_queue()) {
+            let mainScreen = UIStoryboard(name: "Main", bundle: nil)
+            let mainViewController = mainScreen.instantiateInitialViewController()
+            self.window?.rootViewController = mainViewController
+        }
+        
         return true
     }
 
